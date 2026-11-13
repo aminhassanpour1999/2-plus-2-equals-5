@@ -89,6 +89,25 @@ def ensure_clean_worktree() -> None:
         )
 
 
+def ensure_no_existing_pixel_commits() -> None:
+    """Prevent accidental duplicate pixel batches for the target year."""
+    result = subprocess.run(
+        ["git", "log", "--format=%s"],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    marker = f" for {TARGET_YEAR}"
+    if any(
+        subject.startswith("pixel: ") and subject.endswith(marker)
+        for subject in result.stdout.splitlines()
+    ):
+        raise RuntimeError(
+            f"Pixel commits for {TARGET_YEAR} already exist in this history. "
+            "Refusing to create a duplicate batch."
+        )
+
+
 def create_empty_commit(commit_date: date, index: int, total: int) -> None:
     """Create one local empty commit with author and committer dates in 2025."""
     timestamp = datetime.combine(
@@ -147,6 +166,7 @@ def main() -> int:
 
     try:
         ensure_clean_worktree()
+        ensure_no_existing_pixel_commits()
         for index, commit_date in enumerate(dates, start=1):
             create_empty_commit(commit_date, index, len(dates))
     except (RuntimeError, subprocess.CalledProcessError) as exc:
