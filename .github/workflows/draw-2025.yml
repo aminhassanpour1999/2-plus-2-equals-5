@@ -1,0 +1,49 @@
+name: Draw phrase on the 2025 contribution graph
+
+on:
+  workflow_dispatch:
+    inputs:
+      author_email:
+        description: "Email address verified on your GitHub account"
+        required: true
+        type: string
+      confirm_2025:
+        description: "Type exactly 2025 to confirm the target year"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  draw:
+    if: ${{ inputs.confirm_2025 == '2025' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Configure commit identity
+        env:
+          AUTHOR_EMAIL: ${{ inputs.author_email }}
+          AUTHOR_NAME: ${{ github.actor }}
+        run: |
+          git config user.name "$AUTHOR_NAME"
+          git config user.email "$AUTHOR_EMAIL"
+
+      - name: Verify the plan before writing history
+        run: python two_plus_two.py
+
+      - name: Create the 2025 pixel commits
+        run: python two_plus_two.py --execute
+
+      - name: Push the dated commits to main
+        run: git push origin HEAD:main
