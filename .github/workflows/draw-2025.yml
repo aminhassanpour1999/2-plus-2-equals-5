@@ -15,19 +15,31 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: draw-2025-artwork
+  cancel-in-progress: false
+
 jobs:
   draw:
-    if: ${{ inputs.confirm_2025 == '2025' }}
     runs-on: ubuntu-latest
     steps:
+      - name: Validate target year
+        env:
+          CONFIRM_YEAR: ${{ inputs.confirm_2025 }}
+        run: |
+          if [[ "$CONFIRM_YEAR" != "2025" ]]; then
+            echo "::error::Confirmation must be exactly 2025. No commits were created."
+            exit 1
+          fi
+
       - name: Check out main
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: main
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
