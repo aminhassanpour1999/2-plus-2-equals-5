@@ -71,6 +71,7 @@ This project deliberately creates **synthetic empty commits** for a pixel-art ex
 - `--execute` creates local empty commits. It does not push.
 - The script refuses to run outside a Git repository and refuses to proceed if the working tree is not clean.
 - It checks that every generated commit date falls within 2025.
+- It refuses to create a duplicate 2025 pixel batch if pixel commits are already present in the Git history.
 - It never resets, rewrites, or deletes existing history.
 
 ## Project structure
