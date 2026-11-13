@@ -25,6 +25,9 @@ class PixelArtTests(unittest.TestCase):
         self.assertTrue(dates)
         self.assertTrue(all(date(2025, 1, 1) <= day <= date(2025, 12, 31) for day in dates))
 
+    def test_active_pixel_count_is_33(self):
+        self.assertEqual(len(project.active_pixel_dates()), 33)
+
     def test_pixel_dates_are_unique(self):
         dates = project.active_pixel_dates()
         self.assertEqual(len(dates), len(set(dates)))
