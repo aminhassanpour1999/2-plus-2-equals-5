@@ -1,5 +1,7 @@
 import unittest
 from datetime import date
+from types import SimpleNamespace
+from unittest.mock import patch
 
 import two_plus_two as project
 
@@ -37,6 +39,19 @@ class PixelArtTests(unittest.TestCase):
 
     def test_no_2026_dates_are_generated(self):
         self.assertNotIn(2026, {day.year for day in project.active_pixel_dates()})
+
+    @patch("two_plus_two.subprocess.run")
+    def test_existing_pixel_batch_is_rejected(self, mocked_run):
+        mocked_run.return_value = SimpleNamespace(
+            stdout="pixel: 001/044 for 2025\\n"
+        )
+        with self.assertRaisesRegex(RuntimeError, "already exist"):
+            project.ensure_no_existing_pixel_commits()
+
+    @patch("two_plus_two.subprocess.run")
+    def test_history_without_pixel_batch_is_allowed(self, mocked_run):
+        mocked_run.return_value = SimpleNamespace(stdout="docs: initial commit\\n")
+        project.ensure_no_existing_pixel_commits()
 
 
 if __name__ == "__main__":
