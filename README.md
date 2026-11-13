@@ -35,24 +35,16 @@ python3 two_plus_two.py
 
 The default command prints a preview and the exact planned dates. It does not modify Git history.
 
-To create the dated commits locally:
+The published `main` branch already contains the 44-pixel commit batch. Running the preview is safe; running `--execute` in this published repository is intentionally refused because the generator detects that the 2025 batch already exists.
+
+For a separate experiment in a new Git repository that does not already contain this batch, `--execute` creates the dated commits locally. Inspect the history before pushing:
 
 ```bash
-python3 two_plus_two.py --execute
-```
-
-Then inspect the result:
-
-```bash
-git log --format="%h %aI %s" -n 10
+git log --format="%h %aI %s" -n 50
 git status
 ```
 
-When you are satisfied, push the branch:
-
-```bash
-git push origin main
-```
+The generator never pushes automatically.
 
 ## Important GitHub contribution requirements
 
