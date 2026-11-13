@@ -43,14 +43,14 @@ class PixelArtTests(unittest.TestCase):
     @patch("two_plus_two.subprocess.run")
     def test_existing_pixel_batch_is_rejected(self, mocked_run):
         mocked_run.return_value = SimpleNamespace(
-            stdout="pixel: 001/044 for 2025\\n"
+            stdout="pixel: 001/044 for 2025"
         )
         with self.assertRaisesRegex(RuntimeError, "already exist"):
             project.ensure_no_existing_pixel_commits()
 
     @patch("two_plus_two.subprocess.run")
     def test_history_without_pixel_batch_is_allowed(self, mocked_run):
-        mocked_run.return_value = SimpleNamespace(stdout="docs: initial commit\\n")
+        mocked_run.return_value = SimpleNamespace(stdout="docs: initial commit")
         project.ensure_no_existing_pixel_commits()
 
 
