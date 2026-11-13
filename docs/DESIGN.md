@@ -13,10 +13,11 @@ No 2026 dates are part of the design or generated commit plan.
 
 ## Pixel font
 
-Each symbol uses a 3-column × 5-row bitmap. The five glyph instances are:
+Each symbol uses a 3-column × 5-row bitmap. The five glyph instances, in phrase order, are:
 
-- `2`
+- First `2`
 - `+`
+- Second `2`
 - `=`
 - `5`
 
@@ -54,4 +55,4 @@ The bitmap contains **44 active pixels**, therefore the script plans exactly **4
 
 A contribution graph is a calendar visualization, not a pixel API. The project uses empty Git commits with explicit author and committer timestamps to represent active pixels. This is an artificial visual experiment, not a record of work completed on those dates.
 
-The generator defaults to preview mode. The `--execute` flag creates commits locally only; pushing is always a separate, manual action.
+The generator defaults to preview mode. The `--execute` flag creates commits locally only; pushing is always a separate, manual action. Before writing, it checks the Git history and refuses to create a second pixel batch for 2025.
