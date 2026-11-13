@@ -13,7 +13,7 @@ No 2026 dates are part of the design or generated commit plan.
 
 ## Pixel font
 
-Each symbol uses a 3-column × 5-row bitmap. The four glyphs are:
+Each symbol uses a 3-column × 5-row bitmap. The five glyph instances are:
 
 - `2`
 - `+`
@@ -48,7 +48,7 @@ The first displayed Sunday column for the 2025 calendar is December 29, 2024. Th
 
 ## Commit count
 
-The bitmap contains **33 active pixels**, therefore the script plans exactly **33 commits**. Each active pixel maps to one unique weekday date. Every planned date is validated to be in 2025 before any commit is created.
+The bitmap contains **44 active pixels**, therefore the script plans exactly **44 commits**. Each active pixel maps to one unique weekday date. Every planned date is validated to be in 2025 before any commit is created.
 
 ## Why the commits are empty
 
