@@ -100,6 +100,6 @@ You can also publish the dated commits without running the script on your comput
 4. Enter an email address verified on your GitHub account.
 5. Type exactly `2025` in the confirmation field, then run the workflow.
 
-The workflow checks out `main`, creates the same 33 local empty commits with dates in 2025, and pushes them to `main`. It never targets 2026. The workflow requires the repository's Actions setting to allow workflows and write access to repository contents.
+The workflow checks out `main`, creates the same 44 local empty commits with dates in 2025, and pushes them to `main`. It never targets 2026. The workflow requires the repository's Actions setting to allow workflows and write access to repository contents.
 
 Use the email associated with your GitHub account; otherwise the commits may not be attributed to your profile. The manual workflow is intentionally separate from the normal test workflow.
